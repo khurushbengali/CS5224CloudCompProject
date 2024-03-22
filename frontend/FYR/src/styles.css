@@ -1,0 +1,22 @@
+.card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .card h2 {
+    margin-bottom: 5px;
+  }
+  
+  .card-link {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+  }
