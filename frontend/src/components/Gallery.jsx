@@ -18,6 +18,7 @@ import BookCard from './BookCard';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import _ from 'lodash';
+import ImageList from "@mui/material/ImageList";
 
 const BOOK_PER_PAGE = 20;
 
@@ -36,13 +37,17 @@ export default function Gallery(props) {
     }
     return (
         <Box>
-            <Grid container spacing={2}>
+            <ImageList sx={{
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px,1fr)) !important",
+                gridAutoColumns: "minmax(240px, 1fr)",
+                cols: 4,
+                gap: 12,
+                rowHeight: 400
+            }}>
                 {bookChunks[page-1].map(book => (
-                    <Grid item key={book.id} xs={6} md={3} >
-                        <BookCard book={book} />
-                    </Grid>
+                    <BookCard book={book} />
                 ))}
-            </Grid>
+            </ImageList>
             <Pagination count={pageCount} page={page} onChange={handleChange} shape="rounded" />
         </Box>
     );

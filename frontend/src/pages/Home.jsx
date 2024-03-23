@@ -20,24 +20,8 @@ import { Container } from '@mui/material';
 import SortingOptions from '../components/SortingOptions';
 import Gallery from '../components/Gallery';
 import Header from '../components/Header';
-
-function getRandomDateAsString(startDate, endDate) {
-    const start = new Date(startDate).getTime();
-    const end = new Date(endDate).getTime();
-    const randomTime = start + Math.random() * (end - start);
-    const randomDate = new Date(randomTime);
-
-    const year = randomDate.getFullYear();
-    const month = String(randomDate.getMonth() + 1).padStart(2, '0');
-    const day = String(randomDate.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-}
-
-function getRandomDateFromChoices(choices) {
-    const randomIndex = Math.floor(Math.random() * choices.length);
-    return choices[randomIndex];
-}
+import { ALL_SELECT_OPTION } from '../constants';
+import { fetchAllBooks } from '../api/Api';
 
 function sortBy(books, sortOption) {
     var newBooks;
@@ -66,89 +50,54 @@ const filterBook = (filterOptions) => book => {
 
 function Home() {
     const DEFAULT_SORT_OPTION = 'Alphabetical'
-    const ALL_SELECT_OPTION = {
-        "Language": [
-            "cn",
-            "en",
-            "th"
-        ],
-        "Category": [
-            "education",
-            "encyclopedia",
-            "news",
-            "magazine"
-        ],
-        "Level": [
-            "Primary",
-            "Secondary"
-        ]
+    const [allBooks, setAllBooks] = useState([]);
+    const [books, setBooks] = useState([]);
+    const [sortOption, setSortOption] = useState(DEFAULT_SORT_OPTION);
+    const [filterOptions, setFilterOptions] = useState(ALL_SELECT_OPTION);
+
+    useEffect(() => {
+        const fetchedBooks = fetchAllBooks();
+        setAllBooks(fetchedBooks);
+        const sortedBooks = sortBy(fetchedBooks, DEFAULT_SORT_OPTION);
+        setBooks(sortedBooks)
+    }, []);
+    const drawerWidth = 240;
+
+    const reconstructBooks = (sortOption, filterOptions) => {
+        var newBooks = filter(allBooks, filterOptions);
+        newBooks = sortBy(newBooks, sortOption);
+        setBooks(newBooks);
     }
-  // Mock data for books
-  const [allBooks, setAllBooks] = useState([]);
-  const [books, setBooks] = useState([]);
-  const [sortOption, setSortOption] = useState(DEFAULT_SORT_OPTION);
-  const [filterOptions, setFilterOptions] = useState(ALL_SELECT_OPTION);
 
-  useEffect(() => {
-    // Fetch books data from an API or database
-    // For now, let's use static data
-    const dummyUrl = 'https://ic.od-cdn.com/resize?type=auto&url=%2FImageType-100%2F1523-1%2F%257BB240C268-9B32-4D56-A59D-DB07DF769865%257DIMG100.JPG&stripmeta=true&width=440'
-    const nBooks = 13000
-    const randomStartDate = "2000-01-01"
-    const randomEndDate = "2024-01-01"
-    const fetchedBooks = _.range(nBooks).map(x => {
-        const book = {
-            id: x, 
-            title: 'Book ' + x, 
-            image: dummyUrl, 
-            dateAdded: getRandomDateAsString(randomStartDate, randomEndDate)
-        }
-        Object.entries(ALL_SELECT_OPTION).map(([cat, enums]) => (
-            book[cat] = getRandomDateFromChoices(enums)
-        ))
-        return book;
-        })
-    setAllBooks(fetchedBooks);
-    const sortedBooks = sortBy(fetchedBooks, DEFAULT_SORT_OPTION);
-    setBooks(sortedBooks)
-  }, []);
-  const drawerWidth = 240;
+    const sortBooks = (sortOption) => {
+        reconstructBooks(sortOption, filterOptions);
+    }
 
-  const reconstructBooks = (sortOption, filterOptions) => {
-    var newBooks = filter(allBooks, filterOptions);
-    newBooks = sortBy(newBooks, sortOption);
-    setBooks(newBooks);
-  }
+    const filterBooks = (filterOptions) => {
+        reconstructBooks(sortOption, filterOptions);
+    }
 
-  const sortBooks = (sortOption) => {
-    reconstructBooks(sortOption, filterOptions);
-  }
-
-  const filterBooks = (filterOptions) => {
-    reconstructBooks(sortOption, filterOptions);
-  }
-
-  return (
-        <Box>
-            <Header drawerWidth={drawerWidth}/>
-            <Box  sx={{ display: 'flex' }}>
-                <Box component="nav"
-                    sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
-                <SideDrawer allFilterOptions={ALL_SELECT_OPTION} filterOptions={filterOptions} setFilterOptions={setFilterOptions} filterBooks={filterBooks}/>
-                </Box>
-                <Box
-                    component="main"
-                    sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-                >
-                <Box display="flex" justifyContent="flex-end">
-                    <SortingOptions sortOption={sortOption} setSortOption={setSortOption} onSort={sortBooks}/>
-                </Box>
-                <Toolbar />
-                <Gallery books={books} />
+    return (
+            <Box>
+                <Header drawerWidth={drawerWidth}/>
+                <Box  sx={{ display: 'flex' }}>
+                    <Box component="nav"
+                        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+                    <SideDrawer allFilterOptions={ALL_SELECT_OPTION} filterOptions={filterOptions} setFilterOptions={setFilterOptions} filterBooks={filterBooks}/>
+                    </Box>
+                    <Box
+                        component="main"
+                        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+                    >
+                    <Box display="flex" justifyContent="flex-end">
+                        <SortingOptions sortOption={sortOption} setSortOption={setSortOption} onSort={sortBooks}/>
+                    </Box>
+                    <Toolbar />
+                    <Gallery books={books} />
+                    </Box>
                 </Box>
             </Box>
-        </Box>
-  );
+    );
 }
 
 export default Home;

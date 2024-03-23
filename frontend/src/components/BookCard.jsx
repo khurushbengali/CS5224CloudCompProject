@@ -3,6 +3,8 @@ import '../styles.css';
 import { useNavigate } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
   
 
 function BookCard({ book }) {
@@ -14,16 +16,18 @@ function BookCard({ book }) {
     }
 
     return (
-        <Box sx={{
-            '&:hover': {
-                cursor: 'pointer'
-            }
-        }} className="card" onClick={routeChange(book)}>
-            <img src={book.image} alt={book.title} />
-            <Typography variant="h6" noWrap component="div">
-                {book.title}
-            </Typography>
-        </Box>
+        <ImageListItem key={book.id} sx={{
+                '&:hover': {
+                    cursor: 'pointer'
+                }
+            }} className="card" onClick={routeChange(book)}>
+            <img src={book.image} />
+            <ImageListItemBar
+            title={book.title}
+            subtitle={<span>by: {book.author}</span>}
+            position="below"
+            />
+        </ImageListItem>
     );
 }
 export default BookCard;
