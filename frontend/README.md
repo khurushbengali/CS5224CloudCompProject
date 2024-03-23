@@ -15,5 +15,9 @@ Build the static site using
 ```
 npm run build
 ```
+Create a s3 bucket, say call it `deploy-fyr`
 Upload all the contents in `dist` into a s3 bucket
+```
+aws s3 sync dist s3://deploy-fyr
+```
 Follow this [guide](https://www.cloudthat.com/resources/blog/step-by-step-guide-to-deploy-reactjs-app-on-aws-s3) to upload content to s3 bucket

@@ -19,6 +19,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import { Container } from '@mui/material';
 import SortingOptions from '../components/SortingOptions';
 import Gallery from '../components/Gallery';
+import Header from '../components/Header';
 
 function getRandomDateAsString(startDate, endDate) {
     const start = new Date(startDate).getTime();
@@ -128,31 +129,23 @@ function Home() {
   }
 
   return (
-        <Box sx={{ display: 'flex' }}>
-            <AppBar
-                position="fixed"
-                sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-            >
-                <Toolbar>
-                <Typography variant="h6" noWrap component="div">
-                Book Recommender System
-                </Typography>
-                </Toolbar>
-            </AppBar>
-            <Box component="nav"
-                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
-            <SideDrawer allFilterOptions={ALL_SELECT_OPTION} filterOptions={filterOptions} setFilterOptions={setFilterOptions} filterBooks={filterBooks}/>
-            </Box>
-            <Box
-                component="main"
-                sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
-            >
-            <Toolbar />
-            <Box display="flex" justifyContent="flex-end">
-                <SortingOptions sortOption={sortOption} setSortOption={setSortOption} onSort={sortBooks}/>
-            </Box>
-            <Toolbar />
-            <Gallery books={books} />
+        <Box>
+            <Header drawerWidth={drawerWidth}/>
+            <Box  sx={{ display: 'flex' }}>
+                <Box component="nav"
+                    sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}>
+                <SideDrawer allFilterOptions={ALL_SELECT_OPTION} filterOptions={filterOptions} setFilterOptions={setFilterOptions} filterBooks={filterBooks}/>
+                </Box>
+                <Box
+                    component="main"
+                    sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+                >
+                <Box display="flex" justifyContent="flex-end">
+                    <SortingOptions sortOption={sortOption} setSortOption={setSortOption} onSort={sortBooks}/>
+                </Box>
+                <Toolbar />
+                <Gallery books={books} />
+                </Box>
             </Box>
         </Box>
   );
