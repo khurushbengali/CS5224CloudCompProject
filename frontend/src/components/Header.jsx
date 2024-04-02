@@ -24,7 +24,7 @@ export default function Header(props) {
         >
             <Toolbar>
             <Typography variant="h6" noWrap component="div">
-            Book Recommender System
+            Find Your Read
             </Typography>
             </Toolbar>
         </AppBar>)
