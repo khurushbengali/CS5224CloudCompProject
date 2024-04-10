@@ -56,10 +56,13 @@ function Home() {
     const [filterOptions, setFilterOptions] = useState(ALL_SELECT_OPTION);
 
     useEffect(() => {
-        const fetchedBooks = fetchAllBooks();
-        setAllBooks(fetchedBooks);
-        const sortedBooks = sortBy(fetchedBooks, DEFAULT_SORT_OPTION);
-        setBooks(sortedBooks)
+        const callback = (fetchedBooks) => {
+            setAllBooks(fetchedBooks);
+            console.log(fetchedBooks)
+            const sortedBooks = sortBy(fetchedBooks, DEFAULT_SORT_OPTION);
+            setBooks(sortedBooks)
+        }
+        fetchAllBooks(callback);
     }, []);
     const drawerWidth = 240;
 

@@ -1,12 +1,43 @@
 from flask import Flask, request, jsonify
+import flask
 import pandas as pd
+import os
 
-# Load the CSV file into a DataFrame
-df = pd.read_csv('NLB_updated.csv')
+src_directory = os.path.dirname(os.path.realpath(__file__))
+resource_directory = f"{src_directory}/../resources"
 
-recommendation_df = pd.read_csv('recommendation.csv')
+def load_book_info(file):
+    df = pd.read_csv(file)
+    df = df.rename(columns={"identifier_uuid": "uuid"})
+    df = df.fillna("nan")
+    df = df.set_index("uuid", drop=False)
+    return df
+
+def load_recommendations(file):
+    df = pd.read_csv(file)
+    df = df.set_index("UUID")
+    return df
+
+def _get_book_info(uuid):
+    if uuid not in book_info_df.index:
+        return None
+    return book_info_df.loc[uuid].to_dict()
+
+def _get_book_infos(uuids):
+    return book_info_df.loc[uuids].to_dict("records")
+
+book_info_df = load_book_info(f'{resource_directory}/NLB_updated.csv')
+recommendation_df = load_recommendations(f'{resource_directory}/recommendation.csv')
 
 app = Flask(__name__)
+
+
+@app.route('/books', methods=['GET'])
+def get_books():
+    response = flask.jsonify(book_info_df.to_dict("records"))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 
 @app.route('/book-info', methods=['GET'])
 def get_book_info():
@@ -16,16 +47,18 @@ def get_book_info():
     # Check if UUID is provided
     if not uuid:
         return jsonify({'error': 'UUID parameter is missing'}), 400
+    
+    book_info = _get_book_info(uuid)
+    print(book_info)
 
-    # Find the row with the given UUID
-    book_info = df[df['identifier_uuid'] == uuid]
-
-    # Check if the UUID exists in the DataFrame
-    if book_info.empty:
+    if book_info is None:
         return jsonify({'error': 'Book not found'}), 404
 
     # Convert the row to a dictionary and return
-    return jsonify(book_info.iloc[0].to_dict())
+    response = flask.jsonify(book_info)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 
 @app.route('/recommendations', methods=['GET'])
 def get_recommendations():
@@ -33,20 +66,17 @@ def get_recommendations():
     if not uuid:
         return jsonify({'error': 'UUID parameter is missing'}), 400
     
-    # Fetch the recommended books' UUIDs for the given UUID
-    recommended_uuids = recommendation_df[recommendation_df['UUID'] == uuid]
-    
     # If no recommendations found, return an error
-    if recommended_uuids.empty:
+    if uuid not in recommendation_df.index:
         return jsonify({'error': 'No recommendations found for the given UUID'}), 404
     
+    recommended_uuids = recommendation_df.loc[uuid]
+    
     # Get book information for each recommended UUID
-    recommendations_info = []
-    for col in recommendation_df.columns[1:]:  # Skip the first column
-        rec_uuid = a.iloc[0][col]
-        recommendations_info.append(rec_uuid)
-    # return a list of recommended book UUID
-    return jsonify(recommendations_info)
+    book_infos = _get_book_infos(recommended_uuids)
+    response = flask.jsonify(book_infos)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 # Use this code instead if want to return all recommended book information
 '''

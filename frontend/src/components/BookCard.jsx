@@ -10,7 +10,7 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 function BookCard({ book }) {
     let navigate = useNavigate(); 
     const routeChange = (book) => () =>{ 
-        let path = `/product/${book.id}`;
+        let path = `/product/${book.uuid}`;
         console.log(path); 
         navigate(path);
     }
@@ -21,10 +21,10 @@ function BookCard({ book }) {
                     cursor: 'pointer'
                 }
             }} className="card" onClick={routeChange(book)}>
-            <img src={book.image} />
+            <img src={book.identifier_image_uri} />
             <ImageListItemBar
             title={book.title}
-            subtitle={<span>by: {book.author}</span>}
+            subtitle={<span>by: {book.merged_creator}</span>}
             position="below"
             />
         </ImageListItem>
