@@ -17,22 +17,8 @@ function ProductPage() {
   const [book, setBook] = useState(null);
   const [recommendations, setRecommendations] = useState([]);
   useEffect(() => {
-    // Fetch book details from an API or database using the id
-    // For now, let's use static data
-    const fetchedBook = getBookDetailInfo(id);
-    const recommendations = getRecommendations(id);
-    // const fetchedBook = {
-    //   id: parseInt(id),
-    //   title: 'Book 1',
-    //   image: 'book1.jpg',
-    //   description: 'Description for Book 1',
-    //   recommendations: [
-    //     { id: 2, title: 'Book 2', image: 'book2.jpg' },
-    //     // Add more recommendations here
-    //   ],
-    // };
-    setBook(fetchedBook);
-    setRecommendations(recommendations);
+    getBookDetailInfo(id, (fetchedBook) => setBook(fetchedBook));
+    getRecommendations(id, (recommendations) => setRecommendations(recommendations));
   }, [id]);
 
   if (!book) return <div>Loading...</div>;
@@ -42,21 +28,21 @@ function ProductPage() {
       <Header/>
       <Container component="main" maxWidth="lg">
         <Box display="flex" flexDirection="col">
-          <img src={book.image} alt={book.title} />
+          <img style={{minWidth: 500}} src={book.identifier_image_uri} alt={book.title} />
           <Box display="flex" flexDirection="row">
             <Stack>
               <Typography variant="h3" component="div">
                 {book.title}
               </Typography>
               <Typography variant="h4" component="div">
-                by: {book.author}
+                by: {book.merged_creator}
               </Typography>
               <Divider/>
               <Typography variant="h4" component="div">
                 Description:
               </Typography>
               <Typography variant="h4" component="div">
-                {book.description}
+                {book.abstract}
               </Typography>
             </Stack>
           </Box>
@@ -71,7 +57,7 @@ function ProductPage() {
           gap={12}
         >
           {recommendations.map(recommendation => (
-            <BookCard key={recommendation.id} book={recommendation} />
+            <BookCard key={recommendation.uuid} book={recommendation} />
           ))}
         </ImageList>
       </Container>
