@@ -1,17 +1,16 @@
 export const ALL_SELECT_OPTION = {
-    "Language": [
-        "cn",
-        "en",
-        "th"
+    "language": [
+        "eng",
+        "chi",
+        "may",
+        "tam",
+        "others"
     ],
-    "Category": [
-        "education",
-        "encyclopedia",
-        "news",
-        "magazine"
-    ],
-    "Level": [
-        "Primary",
-        "Secondary"
+    "type": [
+        "Digitised Periodical",
+        "Electronic Book",
+        "Digitised Book",
+        "Electronic Periodical",
+        "Periodical"
     ]
 }

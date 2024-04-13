@@ -23,12 +23,39 @@ import Header from '../components/Header';
 import { ALL_SELECT_OPTION } from '../constants';
 import { fetchAllBooks } from '../api/Api';
 
+const LANGUAGE_SET = new Set(["eng", "chi", "may", "tam"])
+
+function preprocessLanguage(languages) {
+    const results = new Set();
+    languages.split("|").forEach(l => {
+        if (LANGUAGE_SET.has(l)) {
+            results.add(l);
+        } else {
+            results.add("others");
+        }
+    })
+    return [...results];
+}
+
+function preprocessType(type) {
+    return type.match(/[\w\s]+/)[0].trim()
+}
+
+function preprocessBook(book) {
+    book["language"] = preprocessLanguage(book["language"])
+    book["type"] = preprocessType(book["type"])
+}
+
+function preprocessBooks(books) {
+    books.map(preprocessBook)
+}
+
 function sortBy(books, sortOption) {
     var newBooks;
     if (sortOption == "Date Added") {
-        newBooks = _.sortBy(books, "dateAdded");
+        newBooks = _.sortBy(books, "date_created");
     } else if (sortOption == "Latest") {
-        newBooks = _.orderBy(books, "dateAdded", "desc");
+        newBooks = _.orderBy(books, "date_created", "desc");
     } else {
         newBooks = _.sortBy(books, "name");
     }
@@ -41,11 +68,33 @@ function filter(books, filterOptions) {
 
 const filterBook = (filterOptions) => book => {
     for (const [cat, enums] of Object.entries(filterOptions)) {
-        if (!enums.includes(book[cat])) {
+        if (cat == "language") {
+            var foundLanguage = false
+            for (var i = 0; i < enums.length; i++) {
+                if (book[cat].includes(enums[i])) {
+                    foundLanguage = true
+                    break
+                }
+            }
+            if (!foundLanguage) {
+                return false
+            }
+
+        } else if (!enums.includes(book[cat])) {
+            // console.log(cat, enums)
             return false
         }
     }
     return true
+}
+
+function getSelectOptions(books, dim) {
+    return _.sortBy(_.toPairs(_.countBy(books, dim)), 1).reverse()
+}
+
+function getSelectOptionsExplodedDim(books, dim) {
+    const dims = _.flatten(books.map(book => book[dim]))
+    return _.sortBy(_.toPairs(_.countBy(dims)), 1).reverse()
 }
 
 function Home() {
@@ -57,8 +106,9 @@ function Home() {
 
     useEffect(() => {
         const callback = (fetchedBooks) => {
+            preprocessBooks(fetchedBooks);
             setAllBooks(fetchedBooks);
-            console.log(fetchedBooks)
+            // const sets = getSelectOptions(fetchedBooks, "type")
             const sortedBooks = sortBy(fetchedBooks, DEFAULT_SORT_OPTION);
             setBooks(sortedBooks)
         }
