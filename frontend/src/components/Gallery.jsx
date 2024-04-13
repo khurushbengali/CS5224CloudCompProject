@@ -45,7 +45,7 @@ export default function Gallery(props) {
                 rowHeight: 400
             }}>
                 {bookChunks[page-1].map(book => (
-                    <BookCard book={book} />
+                    <BookCard key={book.uuid} book={book} />
                 ))}
             </ImageList>
             <Pagination count={pageCount} page={page} onChange={handleChange} shape="rounded" />
