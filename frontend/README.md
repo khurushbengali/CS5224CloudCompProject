@@ -6,6 +6,10 @@ nvm install 18
 nvm use 18
 ```
 ### Dev Setup
+```
+npm install
+```
+### Dev Setup
 This will start a service at `localhost:5173`
 ```
 npm run dev
