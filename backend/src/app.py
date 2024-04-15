@@ -8,17 +8,8 @@ from itertools import chain
 
 dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
 
-<<<<<<< HEAD
 # src_directory = os.path.dirname(os.path.realpath(__file__))
 # resource_directory = f"{src_directory}/../resources"
-=======
-def load_book_info(file):
-    df = pd.read_csv(file)
-    df = df.rename(columns={"identifier_uuid": "uuid", "nlb_type": "type"})
-    df = df.fillna("nan")
-    df = df.set_index("uuid", drop=False)
-    return df
->>>>>>> main
 
 # book_info_read_columns = [
 #     "identifier_uuid",
