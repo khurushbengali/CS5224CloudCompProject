@@ -5,7 +5,7 @@ Setup npm
 nvm install 18
 nvm use 18
 ```
-### Dev Setup
+### NPM Install
 ```
 npm install
 ```
