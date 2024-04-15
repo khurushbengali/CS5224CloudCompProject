@@ -57,7 +57,7 @@ function sortBy(books, sortOption) {
     } else if (sortOption == "Latest") {
         newBooks = _.orderBy(books, "date_created", "desc");
     } else {
-        newBooks = _.sortBy(books, "name");
+        newBooks = _.sortBy(books, "title");
     }
     return newBooks;
 }

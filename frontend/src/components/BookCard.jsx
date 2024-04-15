@@ -21,7 +21,7 @@ function BookCard({ book }) {
                     cursor: 'pointer'
                 }
             }} className="card" onClick={routeChange(book)}>
-            <img src={book.identifier_image_uri} />
+            <img src={"https://eservice.nlb.gov.sg/bookcoverwrapper/cover/"+book.uuid} />
             <ImageListItemBar
             title={book.title}
             subtitle={<span>by: {book.merged_creator}</span>}

@@ -9,6 +9,7 @@ python3 -m virtualenv venv
 
 . venv/bin/activate
 pip3 install -r requirements.txt
+pip3 install pyopenssl
 
 sudo ln -sT ~ /var/www/html/fyr
 sudo a2enmod wsgi

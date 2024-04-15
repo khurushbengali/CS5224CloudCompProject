@@ -28,7 +28,7 @@ function ProductPage() {
       <Header/>
       <Container component="main" maxWidth="lg">
         <Box display="flex" flexDirection="col">
-          <img style={{minWidth: 500}} src={book.identifier_image_uri} alt={book.title} />
+          <img style={{minWidth: 500}} src={"https://eservice.nlb.gov.sg/bookcoverwrapper/cover/"+book.uuid} alt={book.title} />
           <Box display="flex" flexDirection="row">
             <Stack>
               <Typography variant="h3" component="div">
