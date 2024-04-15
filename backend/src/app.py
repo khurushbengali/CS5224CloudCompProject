@@ -8,43 +8,6 @@ from itertools import chain
 
 dynamodb = boto3.resource('dynamodb', region_name="us-east-1")
 
-# src_directory = os.path.dirname(os.path.realpath(__file__))
-# resource_directory = f"{src_directory}/../resources"
-
-# book_info_read_columns = [
-#     "identifier_uuid",
-#     "nlb_type",
-#     "language",
-#     "abstract",
-#     "date_created",
-#     "identifier_image_uri",
-#     "merged_creator",
-#     "title"
-# ]
-
-# def load_book_info(file):
-#     df = pd.read_csv(file, usecols=book_info_read_columns)
-#     df = df.rename(columns={"identifier_uuid": "uuid", "nlb_type": "type"})
-#     df = df.fillna("unknown")
-#     df = df.set_index("uuid", drop=False)
-#     return df
-
-# def load_recommendations(file):
-#     df = pd.read_csv(file)
-#     df = df.set_index("UUID")
-#     return df
-
-# def _get_book_info(uuid):
-#     if uuid not in book_info_df.index:
-#         return None
-#     return book_info_df.loc[uuid].to_dict()
-
-# def _get_book_infos(uuids):
-#     return book_info_df.loc[uuids].to_dict("records")
-
-# book_info_df = load_book_info(f'{resource_directory}/NLB_updated.csv')
-# recommendation_df = load_recommendations(f'{resource_directory}/recommendation.csv')
-
 app = Flask(__name__)
 config = {
     "DEBUG": True,          # some Flask specific configs

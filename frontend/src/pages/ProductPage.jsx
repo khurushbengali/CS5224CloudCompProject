@@ -6,8 +6,6 @@ import { Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import _ from 'lodash';
 import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
 import Stack from '@mui/material/Stack';
 import { getBookDetailInfo, getRecommendations } from '../api/Api';
 import Divider from '@mui/material/Divider';

@@ -1,8 +1,6 @@
 import _ from 'lodash'
 
 const API_URL = import.meta.env.VITE_API_URL
-// const API_URL = 'http://ec2-54-175-60-131.compute-1.amazonaws.com/' // hard cord for now
-console.log(API_URL)
 const BOOKS_URL = API_URL + "books"
 const BOOK_INFO_URL = API_URL + "book-info?uuid="
 const RECOMMEND_URL = API_URL + "recommendations?uuid="

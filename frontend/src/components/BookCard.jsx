@@ -1,8 +1,6 @@
 import React from 'react';
 import '../styles.css';
 import { useNavigate } from "react-router-dom";
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
   
