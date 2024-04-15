@@ -15,7 +15,7 @@ This will start a service at `localhost:5173`
 npm run dev
 ```
 ### Deployment
-Build the static site using
+For deployment, we need to set the API endpoint in `.env.production`, edit it to point to the production endpoint. Then build the static site using
 ```
 npm run build
 ```
