@@ -8,7 +8,7 @@ resource_directory = f"{src_directory}/../resources"
 
 def load_book_info(file):
     df = pd.read_csv(file)
-    df = df.rename(columns={"identifier_uuid": "uuid"})
+    df = df.rename(columns={"identifier_uuid": "uuid", "nlb_type": "type"})
     df = df.fillna("nan")
     df = df.set_index("uuid", drop=False)
     return df
