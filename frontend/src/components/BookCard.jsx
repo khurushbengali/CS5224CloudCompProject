@@ -24,7 +24,15 @@ function BookCard({ book }) {
             <img src={book.identifier_image_uri} />
             <ImageListItemBar
             title={book.title}
-            subtitle={<span>by: {book.merged_creator}</span>}
+            subtitle={
+                <span>
+                {book.merged_creator != "nan" && (
+                <>
+                Creator: {book.merged_creator}
+                </>
+                )}
+                </span>
+            }
             position="below"
             />
         </ImageListItem>
