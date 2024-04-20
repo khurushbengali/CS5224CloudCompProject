@@ -22,7 +22,15 @@ function BookCard({ book }) {
             <img src={"https://eservice.nlb.gov.sg/bookcoverwrapper/cover/"+book.uuid} />
             <ImageListItemBar
             title={book.title}
-            subtitle={<span>by: {book.merged_creator}</span>}
+            subtitle={
+                <span>
+                {book.merged_creator != "nan" && (
+                <>
+                Creator: {book.merged_creator}
+                </>
+                )}
+                </span>
+            }
             position="below"
             />
         </ImageListItem>

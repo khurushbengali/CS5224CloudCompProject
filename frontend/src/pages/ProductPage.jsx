@@ -33,14 +33,43 @@ function ProductPage() {
                 {book.title}
               </Typography>
               <Typography variant="h4" component="div">
-                by: {book.merged_creator}
+                {book.merged_creator != "nan" && (
+                <>
+                Creator: {book.merged_creator}
+                </>
+                )}
               </Typography>
               <Divider/>
               <Typography variant="h4" component="div">
-                Description:
+                {book.merged_contributor != "nan" && (
+                <>
+                Contributor: {book.merged_contributor}
+                </>
+                )}
               </Typography>
+              <Divider/>
               <Typography variant="h4" component="div">
-                {book.abstract}
+                {book.abstract != "nan" && (
+                <>
+                Description : {book.abstract}
+                </>
+                )}
+              </Typography>
+              <Divider/>
+              <Typography variant="h4" component="div">
+                {book.date_created != "nan" && (
+                <>
+                Date : {book.date_created}
+                </>
+                )}
+              </Typography>
+              <Divider/>
+              <Typography variant="h4" component="div">
+                {book.subject_lcsh != "nan" && (
+                <>
+                Subject : {book.subject_lcsh}
+                </>
+                )}
               </Typography>
             </Stack>
           </Box>
