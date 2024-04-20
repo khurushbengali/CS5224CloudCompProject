@@ -6,8 +6,6 @@ import { Container, Typography } from '@mui/material';
 import Box from '@mui/material/Box';
 import _ from 'lodash';
 import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
 import Stack from '@mui/material/Stack';
 import { getBookDetailInfo, getRecommendations } from '../api/Api';
 import Divider from '@mui/material/Divider';
@@ -28,7 +26,7 @@ function ProductPage() {
       <Header/>
       <Container component="main" maxWidth="lg">
         <Box display="flex" flexDirection="col">
-          <img style={{minWidth: 500}} src={book.identifier_image_uri} alt={book.title} />
+          <img style={{minWidth: 500}} src={"https://eservice.nlb.gov.sg/bookcoverwrapper/cover/"+book.uuid} alt={book.title} />
           <Box display="flex" flexDirection="row">
             <Stack>
               <Typography variant="h3" component="div">

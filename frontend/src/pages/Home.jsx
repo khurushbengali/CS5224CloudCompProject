@@ -1,22 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Grid from '@mui/material/Grid';
 import SideDrawer from '../components/Drawer'
 import _ from 'lodash'
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { Container } from '@mui/material';
 import SortingOptions from '../components/SortingOptions';
 import Gallery from '../components/Gallery';
 import Header from '../components/Header';
@@ -57,7 +43,7 @@ function sortBy(books, sortOption) {
     } else if (sortOption == "Latest") {
         newBooks = _.orderBy(books, "date_created", "desc");
     } else {
-        newBooks = _.sortBy(books, "name");
+        newBooks = _.sortBy(books, "title");
     }
     return newBooks;
 }

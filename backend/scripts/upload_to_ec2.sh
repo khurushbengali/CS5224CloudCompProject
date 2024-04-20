@@ -6,4 +6,4 @@ SRC=${2:-"./"}
 DEST_IP=$3
 
 # scp -i ${KEYFILE} -r ${SRC} ubuntu@${DEST_IP}:./
-rsync -av -e "ssh -i ${KEYFILE}" --exclude='*venv*' ${SRC} ubuntu@${DEST_IP}:./
+rsync -av -e "ssh -i ${KEYFILE}" --exclude='*venv*' --exclude='*resources*' ${SRC} ubuntu@${DEST_IP}:./

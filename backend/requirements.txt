@@ -1,2 +1,4 @@
+boto3==1.26.103
 Flask==3.0.3
+Flask_Caching==2.1.0
 pandas==1.5.3
